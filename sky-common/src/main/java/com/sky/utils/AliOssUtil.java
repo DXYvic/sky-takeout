@@ -7,28 +7,36 @@ import com.aliyun.oss.OSSException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+
 
 @Data
 @AllArgsConstructor
 @Slf4j
+@Component
 public class AliOssUtil {
 
-    private String endpoint;
-    private String accessKeyId;
-    private String accessKeySecret;
-    private String bucketName;
+//    private String endpoint;
+//    private String accessKeyId;
+//    private String accessKeySecret;
+//    private String bucketName;
+
 
     /**
      * 文件上传
-     *
-     * @param bytes
+     * @param file
      * @param objectName
      * @return
+     * @throws IOException
      */
-    public String upload(byte[] bytes, String objectName) {
+    public String upload(MultipartFile file, String objectName) throws IOException {
 
-        // 创建OSSClient实例。
+       /* // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
@@ -50,17 +58,19 @@ public class AliOssUtil {
             if (ossClient != null) {
                 ossClient.shutdown();
             }
-        }
+        }*/
 
         //文件访问路径规则 https://BucketName.Endpoint/ObjectName
-        StringBuilder stringBuilder = new StringBuilder("https://");
-        stringBuilder
-                .append(bucketName)
-                .append(".")
-                .append(endpoint)
-                .append("/")
-                .append(objectName);
+        //下面没有使用阿里云oss，使用的是本地上传
 
+        StringBuilder stringBuilder = new StringBuilder("D:\\skyFile_UploadTest\\");
+        stringBuilder
+//                .append(bucketName)
+//                .append(".")
+//                .append(endpoint)
+//                .append("/")
+                .append(objectName);
+        file.transferTo(new File(stringBuilder.toString()));
         log.info("文件上传到:{}", stringBuilder.toString());
 
         return stringBuilder.toString();
