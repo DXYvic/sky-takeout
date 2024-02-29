@@ -61,8 +61,8 @@ public class AliOssUtil {
         }*/
 
         //文件访问路径规则 https://BucketName.Endpoint/ObjectName
-        //下面没有使用阿里云oss，使用的是本地上传
 
+        //下面没有使用阿里云oss，使用的是本地上传
         StringBuilder stringBuilder = new StringBuilder("D:\\skyFile_UploadTest\\");
         stringBuilder
 //                .append(bucketName)
@@ -70,9 +70,10 @@ public class AliOssUtil {
 //                .append(endpoint)
 //                .append("/")
                 .append(objectName);
+        String returnImagePate="http://127.0.0.1:8080/images/"+objectName;
         file.transferTo(new File(stringBuilder.toString()));
         log.info("文件上传到:{}", stringBuilder.toString());
 
-        return stringBuilder.toString();
+        return returnImagePate;
     }
 }
