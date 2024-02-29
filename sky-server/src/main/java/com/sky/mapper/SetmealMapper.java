@@ -4,12 +4,14 @@ import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
+import com.sky.entity.SetmealDish;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper
 public interface SetmealMapper {
@@ -17,6 +19,7 @@ public interface SetmealMapper {
 
     /**
      * 套餐分页查询
+     *
      * @param setmealPageQueryDTO
      * @return
      */
@@ -25,6 +28,7 @@ public interface SetmealMapper {
 
     /**
      * 根据分类id查询套餐的数量
+     *
      * @param id
      * @return
      */
@@ -34,6 +38,7 @@ public interface SetmealMapper {
 
     /**
      * 新增套餐
+     *
      * @param setmeal
      */
     @AutoFill(OperationType.INSERT)
@@ -41,6 +46,7 @@ public interface SetmealMapper {
 
     /**
      * 根据ID查询套餐
+     *
      * @param id
      * @return
      */
@@ -49,8 +55,27 @@ public interface SetmealMapper {
 
     /**
      * 根据ID删除套餐
+     *
      * @param setmealId
      */
     @Delete("delete from setmeal where id=#{setmealId} ;")
     void deleteById(Long setmealId);
+
+    /**
+     * 根据套餐ID查询套餐和菜品的关系
+     *
+     * @param setmealId
+     * @return
+     */
+    @Select("select * from setmeal_dish where setmeal_id =#{setmealId}")
+    List<SetmealDish> getBySetmealId(Long setmealId);
+
+
+    /**
+     * 修改套餐表
+     *
+     * @param setmeal
+     */
+    @AutoFill(value = OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }
