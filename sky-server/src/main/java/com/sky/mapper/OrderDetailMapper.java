@@ -14,6 +14,8 @@ public interface OrderDetailMapper {
      * @param orderDetailList
      */
     void insertBatch(List<OrderDetail> orderDetailList);
+
+
     /**
      * 根据订单id查询订单明细
      * @param orderId
