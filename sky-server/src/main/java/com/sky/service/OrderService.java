@@ -110,4 +110,10 @@ public interface OrderService {
      */
 
     void payment1(String orderNumber);
+
+    /**
+     * 客户催单
+     * @param id
+     */
+    void reminder(Long id);
 }
