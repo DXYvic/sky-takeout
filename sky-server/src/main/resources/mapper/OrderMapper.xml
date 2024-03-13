@@ -8,12 +8,12 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into orders(number, status, user_id, address_book_id, order_time, checkout_time,
                            pay_method, pay_status, amount, remark, phone, address,
-                           consignee,estimated_delivery_time, delivery_status,
+                           consignee, estimated_delivery_time, delivery_status,
                            pack_amount, tableware_number, tableware_status)
-        VALUES(#{number},#{status}, #{userId}, #{addressBookId}, #{orderTime}, #{checkoutTime},
-               #{payMethod}, #{payStatus}, #{amount}, #{remark}, #{phone}, #{address},
-               #{consignee},#{estimatedDeliveryTime}, #{deliveryStatus},
-               #{packAmount}, #{tablewareNumber}, #{tablewareStatus})
+        VALUES (#{number}, #{status}, #{userId}, #{addressBookId}, #{orderTime}, #{checkoutTime},
+                #{payMethod}, #{payStatus}, #{amount}, #{remark}, #{phone}, #{address},
+                #{consignee}, #{estimatedDeliveryTime}, #{deliveryStatus},
+                #{packAmount}, #{tablewareNumber}, #{tablewareStatus})
 
 
     </insert>
@@ -73,18 +73,36 @@
     </select>
     <select id="sumByMap" resultType="java.lang.Double">
 
-select sum(amount) from orders
-<where>
+        select sum(amount) from orders
+        <where>
 
-    <if test="begin!=null ">
-        and order_time &gt; #{begin}    <!--        &gt表示> -->
-    </if>
-    <if test="end!=null">
-        and order_time &lt; #{end}
-    </if>
-    <if test="status!=null">
-        and status=#{status}
-    </if>
-</where>
+            <if test="begin!=null ">
+                and order_time &gt; #{begin}    <!--        &gt表示> -->
+            </if>
+            <if test="end!=null">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+    <select id="countByMap" resultType="java.lang.Integer">
+
+        select count(id)
+        from orders
+        <where>
+
+            <if test="begin!=null ">
+                and order_time &gt; #{begin}    <!--        &gt表示> -->
+            </if>
+            <if test="end!=null">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+
     </select>
 </mapper>
